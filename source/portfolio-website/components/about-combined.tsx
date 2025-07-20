@@ -78,9 +78,8 @@ export default function AboutCombined() {
             {/* Right content */}
             <div className="flex-1 text-center lg:text-right">
               <p className="text-lg leading-relaxed text-gray-700">
-                <span className="font-semibold text-purple-600">MBTI는 INFJ</span>로 한가지 일에 빠지면 체계적으로
-                탐구하고 공부하는 성격이에요! 😆 😆<br />
-                앞으로도 꾸준히 공부하며 더욱 더 멋진 개발자로 성장해가기 위해 노력중입니다🤍
+                <span className="font-semibold text-purple-600">MBTI는 INFJ</span>로 한가지 일에 빠지면 체계적으로😆<br />
+                탐구하고 공부하는 성격이에요! 😆 😆<br />앞으로도 꾸준히 공부하며 더욱 더 멋진 개발자로 성장해가기 위해 노력중입니다🤍
               </p>
             </div>
           </div>
