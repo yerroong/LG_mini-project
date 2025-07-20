@@ -36,8 +36,8 @@ export default function AboutCombined() {
             </div>
 
             <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-6 rounded-xl">
-              <h3 className="text-xl font-bold mb-4 text-center text-gray-800">사용가능한 툴&언어</h3>
-              <p className="text-center text-gray-700">React, HTML/CSS, JavaScript, TypeScript, GitHub, Figma, C++</p>
+              <h3 className="text-xl font-bold mb-4 text-center text-gray-800">사용가능한 툴 & 언어</h3>
+              <p className="text-center text-gray-700">React, HTML/CSS, JavaScript, TypeScript, GitHub, Figma, C++ <br /> PowerPoint, Excel, Word 등 기본적인 오피스 프로그램을 능숙하게 다룰 수 있습니다.</p>
             </div>
 
             <div className="text-center">
