@@ -1,0 +1,58 @@
+/* === Layout === */
+.guide-page {
+  min-height: 100vh;
+  background: #fafbfc;
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 45px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 60px);
+}
+
+/* === Header === */
+.guide-header {
+  padding-left: 32px;
+}
+
+.guide-title {
+  margin: 0;
+  font-family: Pretendard;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.25;
+  color: #000;
+}
+
+.guide-subtitle {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #92939f;
+  margin-bottom: 20px;
+}
+
+/* === Cards === */
+.guide-cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  margin-top: 40px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.guide-card {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  cursor: pointer;
+}
