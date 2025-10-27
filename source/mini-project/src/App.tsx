@@ -13,6 +13,7 @@ import InfoCompPage from "./pages/InfoPage/InfoCompPage/InfoCompPage";
 import InfoProcessPage from "./pages/InfoPage/InfoProcessPage/InfoProcessPage";
 import InfoSalaryPage from "./pages/InfoPage/InfoSalaryPage/InfoSalaryPage";
 import InfoDictionPage from "./pages/InfoPage/InfoDictionPage/InfoDictionPage";
+import EditPage from "./pages/MyPage/EditPage";
 
 import MedicarePage from "./pages/Medi-carePage/MedicarePage";
 import MedicareGuideFlow from "./pages/Medi-carePage/MedicareGuideFlow";
@@ -35,12 +36,14 @@ function App() {
     <Router>
       <FormDataProvider>
         <Routes>
-          <Route path="/" element={<LangPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/favorite" element={<FavoritePage />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/edit" element={<EditPage />} />
+          <Route path="/lang" element={<LangPage />} />
+
 
           <Route path="/cases" element={<CasePage />} />
           <Route path="/cases/:id" element={<CaseDetailPage />} />

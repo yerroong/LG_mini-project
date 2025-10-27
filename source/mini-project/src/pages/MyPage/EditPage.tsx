@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import BottomBar from "../../components/BottomBar/BottomBar";
 import "./EditPage.css";
@@ -9,16 +9,37 @@ export default function EditPage() {
   const [profileImg, setProfileImg] = useState("/Mypage/default-profile.svg");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  // 🔹 localStorage에서 사용자 정보 불러오기
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    birthDate: "",
+    foreignerId: "",
+    phone: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    const storedInfo = {
+      name: localStorage.getItem("name") || "",
+      birthDate: localStorage.getItem("birthDate") || "",
+      foreignerId: localStorage.getItem("foreignerId") || "",
+      phone: localStorage.getItem("phone") || "",
+      email: localStorage.getItem("email") || "",
+    };
+    setUserInfo(storedInfo);
+  }, []);
+
+  // 🔹 로그아웃 → 로그인 페이지로 이동
   const onLogout = () => {
-    nav("/signup");
+    localStorage.clear();
+    nav("/");
   };
 
-  // 카메라 아이콘 클릭 시 input 열기
+  // 🔹 프로필 사진 변경
   const handlePhotoEditClick = () => {
     fileInputRef.current?.click();
   };
 
-  // 이미지 선택 → 미리보기 업데이트
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -62,28 +83,33 @@ export default function EditPage() {
       <div className="info-list">
         <button className="info-row" onClick={noop}>
           <div className="info-label">이름(생년월일)</div>
-          <div className="info-value">김윗인 (2002.05.11)</div>
+          <div className="info-value">
+            {userInfo.name || "이름 없음"}{" "}
+            {userInfo.birthDate && `(${userInfo.birthDate})`}
+          </div>
           <img className="row-arrow" src="/arrow-gray.svg" alt="" />
         </button>
         <div className="divider" />
 
         <button className="info-row" onClick={noop}>
           <div className="info-label">외국인등록번호</div>
-          <div className="info-value">823497-30093</div>
+          <div className="info-value">
+            {userInfo.foreignerId || "등록번호 없음"}
+          </div>
           <img className="row-arrow" src="/arrow-gray.svg" alt="" />
         </button>
         <div className="divider" />
 
         <button className="info-row" onClick={noop}>
           <div className="info-label">휴대폰 번호</div>
-          <div className="info-value">010-1234-5678</div>
+          <div className="info-value">{userInfo.phone || "번호 없음"}</div>
           <img className="row-arrow" src="/arrow-gray.svg" alt="" />
         </button>
         <div className="divider" />
 
         <button className="info-row" onClick={noop}>
           <div className="info-label">이메일</div>
-          <div className="info-value">within@gmail.com</div>
+          <div className="info-value">{userInfo.email || "이메일 없음"}</div>
           <img className="row-arrow" src="/arrow-gray.svg" alt="" />
         </button>
         <div className="divider" />
@@ -95,11 +121,11 @@ export default function EditPage() {
         <div className="divider" />
       </div>
 
-      {/* 로그아웃/회원탈퇴 */}
+      {/* 로그아웃 */}
       <div className="logout-wrap">
-        <button className="logout-btn" onClick={onLogout}>로그아웃</button>
-        <span className="sep">|</span>
-        <button className="withdraw-btn" onClick={noop}>회원탈퇴</button>
+        <button className="logout-btn" onClick={onLogout}>
+          로그아웃
+        </button>
       </div>
 
       <BottomBar />

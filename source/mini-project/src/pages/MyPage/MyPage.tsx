@@ -2,12 +2,26 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import BottomBar from "../../components/BottomBar/BottomBar";
 import "./MyPage.css";
+import { useEffect, useState } from "react";
 
 export default function MyPage() {
   const nav = useNavigate();
 
+  // 🔹 username 불러오기 (로그인 시 저장된 아이디)
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username") || "";
+    setUsername(storedUsername);
+  }, []);
+
   const goEdit = () => nav("/mypage/edit");
   const goData = () => nav("/mypage/data");
+
+  const handleLogout = () => {
+    localStorage.clear();
+    nav("/");
+  };
 
   return (
     <div className="mypage">
@@ -31,13 +45,13 @@ export default function MyPage() {
             alt=""
           />
         </button>
-        <div className="profile-name">김윗인</div>
+
+        {/* 🔹 localStorage에서 불러온 아이디 표시 */}
+        <div className="profile-name">{username || "사용자"}</div>
       </section>
 
       {/* 내 정보 */}
-      <div className="section-title" style={{ marginTop: 24 }}>
-        내 정보
-      </div>
+      <div className="section-title" style={{ marginTop: 24 }}>내 정보</div>
       <div className="list-row" onClick={goEdit} role="button" tabIndex={0}>
         <span className="row-text">정보 수정</span>
         <img className="row-arrow" src="/arrow-gray.svg" alt="" />
@@ -50,6 +64,15 @@ export default function MyPage() {
       <div className="list-row" onClick={goData} role="button" tabIndex={0}>
         <span className="row-text">서류 관리</span>
         <img className="row-arrow" src="/arrow-gray.svg" alt="" />
+      </div>
+
+      <div className="gap-strip" />
+
+      {/* 로그아웃 버튼 */}
+      <div className="logout-section">
+        <button className="logout-btn" onClick={handleLogout}>
+          로그아웃
+        </button>
       </div>
 
       <BottomBar />

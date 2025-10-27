@@ -12,6 +12,11 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       proxy: {
+              "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        secure: false,
+      },
         '/api/geocode': {
           target: 'https://maps.apigw.ntruss.com',
           changeOrigin: true,

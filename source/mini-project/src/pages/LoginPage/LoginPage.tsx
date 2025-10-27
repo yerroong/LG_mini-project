@@ -1,31 +1,64 @@
+// src/pages/LoginPage/LoginPage.tsx
 import "./LoginPage.css";
 import ContinueButton from "../../components/Login/Button/ContinueButton";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginPage = () => {
-  const [id, setId] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // ⬅️ 라우터 이동 훅 추가
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
-  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const clearId = () => {
-    setId("");
-  };
+  const clearUsername = () => setUsername("");
+  const clearPassword = () => setPassword("");
 
-  const clearPassword = () => {
-    setPassword("");
+  const handleLogin = async () => {
+    try {
+      setErrorMsg("");
+
+      // 로그인 요청
+      const response = await axios.post("/api/users/login", null, {
+        params: { username, password },
+      });
+
+      const user = response.data; 
+      // 서버에서 반환 예시:
+      // { username, name, birthDate, foreignerId, phone, email, accessToken, refreshToken }
+
+      // localStorage에 로그인 정보 저장
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("name", user.name);
+      localStorage.setItem("birthDate", user.birthDate || "");
+      localStorage.setItem("foreignerId", user.foreignerId || "");
+      localStorage.setItem("phone", user.phone || "");
+      localStorage.setItem("email", user.email || "");
+      localStorage.setItem("accessToken", user.accessToken || "");
+      localStorage.setItem("refreshToken", user.refreshToken || "");
+
+      console.log("로그인 성공:", user);
+
+      navigate("/home");
+    } catch (error: any) {
+      if (error.response) {
+        setErrorMsg(error.response.data); // 서버 메시지 표시
+      } else {
+        setErrorMsg("로그인 중 오류가 발생했습니다.");
+      }
+    }
   };
 
   return (
-    <div>
+    <div className="login-page">
       <div className="login-intro-section">
         <div className="logo-section">
           <img src="/Logo-splash.svg" alt="Logo" className="logo-image" />
@@ -41,13 +74,13 @@ const LoginPage = () => {
             type="text"
             placeholder="아이디"
             className="login-input"
-            value={id}
-            onChange={handleIdChange}
+            value={username}
+            onChange={handleUsernameChange}
           />
-          {id && (
+          {username && (
             <button
               className="login-close"
-              onClick={clearId}
+              onClick={clearUsername}
               type="button"
               aria-label="아이디 입력 삭제"
             >
@@ -76,21 +109,16 @@ const LoginPage = () => {
           )}
         </div>
 
-        {/*  계속 버튼 누르면 루트 홈 페이지로 이동 */}
-        <ContinueButton text="계속" onClick={() => navigate("/home")} />
+        {errorMsg && <div className="error-msg">{errorMsg}</div>}
+
+        <ContinueButton text="계속" onClick={handleLogin} />
 
         <div className="login-signup-section">
-          <a href="#" className="login-link">
-            아이디 찾기
-          </a>
+          <a href="#" className="login-link">아이디 찾기</a>
           <span className="separator">|</span>
-          <a href="#" className="login-link">
-            비밀번호 찾기
-          </a>
+          <a href="#" className="login-link">비밀번호 찾기</a>
           <span className="separator">|</span>
-          <Link to="/signup" className="login-link signup-link">
-            회원가입
-          </Link>
+          <a href="/signup" className="login-link signup-link">회원가입</a>
         </div>
       </div>
     </div>
